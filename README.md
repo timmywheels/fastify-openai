@@ -30,12 +30,13 @@ bun add fastify-openai
 The package needs to be added to your project with `register` and you must at least configure your account's secret key wich is available in your [OpenAI Dashboard](https://platform.openai.com/docs/api-reference/api-keys) then call the [OpenAI](https://github.com/openai/openai-node) API and you are done.
 
 #### Importing the package
+
 ```js
 // ESM
-import fastifyOpenAI from 'fastify-openai';
+import fastifyOpenAI from "fastify-openai";
 
 // CJS
-const fastifyOpenAI = require('fastify-openai');
+const fastifyOpenAI = require("fastify-openai");
 ```
 
 #### JavaScript + CJS
@@ -48,33 +49,20 @@ fastify.register(require("fastify-openai"), {
 });
 
 fastify.post("/chat", async (request, reply) => {
-  try {
-    // create a chat completion using the OpenAI API
-    const chatCompletions = await fastify.openai.chat.completions.create({
-      messages: [{ role: "user", content: "Hello, Fastify!" }],
-      model: "gpt-4o-mini",
-    });
+  // create a chat completion using the OpenAI API
+  const chat = await fastify.openai.chat.completions.create({
+    messages: [{ role: "user", content: "Hello, Fastify!" }],
+    model: "gpt-4o-mini",
+  });
 
-    reply.code(201);
-    return {
-      status: "ok",
-      data: chatCompletions,
-    };
-  } catch (err) {
-    reply.code(500);
-    return err;
-  }
+  return chat;
 });
 
-fastify.listen(3000, (err) => {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-});
+fastify.listen({ port: 3000 });
 ```
 
 #### TypeScript + ESM
+
 ```ts
 import Fastify from "fastify";
 import fastifyOpenAI from "fastify-openai";
@@ -86,30 +74,15 @@ fastify.register(fastifyOpenAI, {
 });
 
 fastify.post("/chat", async (request, reply) => {
-  try {
-    // create a chat completion using the OpenAI API
-    const chatCompletions = await fastify.openai.chat.completions.create({
-      messages: [{ role: "user", content: "Hello, Fastify!" }],
-      model: "gpt-4o-mini",
-    });
-
-    reply.code(201);
-    return {
-      status: "ok",
-      data: chatCompletions,
-    };
-  } catch (err) {
-    reply.code(500);
-    return err;
-  }
+  // create a chat completion using the OpenAI API
+  const chat = await fastify.openai.chat.completions.create({
+    messages: [{ role: "user", content: "Hello, Fastify!" }],
+    model: "gpt-4o-mini",
+  });
+  return chat;
 });
 
-fastify.listen({ port: 3000 }, (err) => {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-});
+fastify.listen({ port: 3000 });
 
 // declaration merging
 declare module "fastify" {
@@ -117,7 +90,6 @@ declare module "fastify" {
     openai: FastifyOpenAI;
   }
 }
-
 ```
 
 ### Options
@@ -139,66 +111,45 @@ declare module "fastify" {
 - `maxRetries` **[ optional ]**: The maximum number of retries for a request.
 
 ### Multiple plugin instances
+
 When using multiple plugin instances, the `name` property is required for each instance.
 
 ```js
-const fastify = require('fastify')({ logger: true })
+import Fastify from "fastify";
+import fastifyOpenAI from "fastify-openai";
+
+const fastify = Fastify({ logger: true });
 
 fastify
-  .register(require('fastify-openai'), {
-    apiKey: 'sk-Te5t...',
-    name: 'test',
-    timeout: 28000 // in ms (this is 28 seconds)
+  .register(require("fastify-openai"), {
+    apiKey: "sk-Te5t...",
+    name: "test",
+    timeout: 28000, // in ms (this is 28 seconds)
   })
-  .register(require('fastify-openai'), {
-    apiKey: 'sk-Pr0d...',
-    name: 'prod'
-  })
-
+  .register(require("fastify-openai"), {
+    apiKey: "sk-Pr0d...",
+    name: "prod",
+  });
 
 fastify.post("/test/chat", function (request, reply) {
   // create a chat completion using the OpenAI API 'test' instance
-  fastify.openai.test.chat.completions
-    .create({
-      messages: [{ role: "user", content: "Hello, Test!" }],
-      model: "gpt-4o-mini",
-    })
-    .then((chatCompletions) => {
-      reply.code(201).send({
-        status: "ok",
-        data: chatCompletions,
-      });
-    })
-    .catch((err) => {
-      reply.code(500).send(err);
-    });
+  const testChat = await fastify.openai.test.chat.completions.create({
+    messages: [{ role: "user", content: "Hello, Test!" }],
+    model: "gpt-4o-mini",
+  });
+  return testChat;
 });
-
 
 fastify.post("/prod/chat", function (request, reply) {
   // create a chat completion using the OpenAI API 'prod' instance
-  fastify.openai.prod.chat.completions
-    .create({
+  const prodChat = await fastify.openai.prod.chat.completions.create({
       messages: [{ role: "user", content: "Hello, Production!" }],
       model: "gpt-4o-mini",
-    })
-    .then((chatCompletions) => {
-      reply.code(201).send({
-        status: "ok",
-        data: chatCompletions,
-      });
-    })
-    .catch((err) => {
-      reply.code(500).send(err);
     });
+  return prodChat;
 });
 
-fastify.listen({ port: 3000 }, function (err) {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-});
+fastify.listen({ port: 3000 });
 ```
 
 ## Documentation
