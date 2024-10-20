@@ -13,16 +13,16 @@ Install the package:
 
 ```sh
 # npm
-npm i fastify-openai openai
+npm i fastify-openai
 
 # yarn
-yarn add fastify-openai openai
+yarn add fastify-openai
 
 # pnpm
-pnpm add fastify-openai openai
+pnpm add fastify-openai
 
 # bun
-bun add fastify-openai openai
+bun add fastify-openai
 ```
 
 ## Usage

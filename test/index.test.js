@@ -30,7 +30,6 @@ test('it should not allow an instance to override a reserved keyword', async (t)
   } catch (err) {
     t.equal(err.message, 'fastify-openai \'_options\' is a reserved keyword')
   }
-
 })
 
 test('it should not allow multiple instances of fastify.openai with the same name', async (t) => {
