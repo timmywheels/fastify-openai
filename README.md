@@ -84,7 +84,7 @@ fastify.post("/chat", async (request, reply) => {
 
 fastify.listen({ port: 3000 });
 
-// declaration merging
+// typescript declaration merging
 declare module "fastify" {
   interface FastifyInstance {
     openai: FastifyOpenAI;
@@ -110,7 +110,7 @@ declare module "fastify" {
 
 - `maxRetries` **[ optional ]**: The maximum number of retries for a request.
 
-### Multiple plugin instances
+### Multiple plugin instances (TypeScript + ESM)
 
 When using multiple plugin instances, the `name` property is required for each instance.
 
@@ -150,6 +150,16 @@ fastify.post("/prod/chat", function (request, reply) {
 });
 
 fastify.listen({ port: 3000 });
+
+// typescript declaration merging
+declare module "fastify" {
+  interface FastifyInstance {
+    openai: {
+      test: FastifyOpenAI;
+      prod: FastifyOpenAI;
+    }
+  }
+}
 ```
 
 ## Documentation
