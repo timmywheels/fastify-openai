@@ -17,7 +17,24 @@ test('it should throw if api key not defined', async (t) => {
   }
 })
 
+test('it should not allow an instance to override a reserved keyword', async (t) => {
+  t.plan(1)
+
+  const fastify = Fastify()
+
+  try {
+    await fastify.register(fastifyOpenAI, {
+      apiKey: process.env.OPENAI_API_KEY,
+      name: '_options' // reserved property name
+    })
+  } catch (err) {
+    t.equal(err.message, 'fastify-openai \'_options\' is a reserved keyword')
+  }
+
+})
+
 test('it should not allow multiple instances of fastify.openai with the same name', async (t) => {
+  t.plan(1)
   const fastify = Fastify()
   t.teardown(fastify.close.bind(fastify))
 

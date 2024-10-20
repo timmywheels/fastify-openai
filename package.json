@@ -1,6 +1,6 @@
 {
   "name": "fastify-openai",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OpenAI Fastify plugin",
   "main": "index.js",
   "types": "index.d.ts",
@@ -45,14 +45,14 @@
     "coveralls": "^3.1.1",
     "dotenv": "^16.0.0",
     "fastify": "^5.0.0",
-    "openai": "^4.0.0",
+    "openai": "^4.68.1",
     "standard": "^17.0.0",
     "tap": "^20.0.0",
     "tsd": "^0.31.2",
     "typescript": "^5.6.3"
   },
   "peerDependencies": {
-    "openai": ">=4.0.0"
+    "openai": "^4.68.0"
   },
   "tsd": {
     "directory": "test/types"

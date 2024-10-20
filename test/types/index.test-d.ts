@@ -33,6 +33,6 @@ await appTwo.register(fastifyOpenAI, {
 appTwo.ready(() => {
   expectAssignable<FastifyOpenAINamedInstance>(appTwo.openai);
   expectType<OpenAI>(appTwo.openai.two);
-  expectType<OpenAI.Chat>(appTwo.openai["two"].chat);
+  expectType<OpenAI.Chat>(appTwo.openai.two.chat);
   appTwo.close();
 });
