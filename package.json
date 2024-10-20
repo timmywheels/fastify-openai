@@ -13,7 +13,8 @@
     "unit": "tap test/index.test.js",
     "unit:coverage": "npm run unit -- --coverage-report=lcovonly --no-browser",
     "unit:report": "npm run unit -- --coverage-report=html",
-    "unit:verbose": "npm run unit -- -Rspec"
+    "unit:verbose": "npm run unit -- -Rspec",
+    "coveralls": "cat .tap/report/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
