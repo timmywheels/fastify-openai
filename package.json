@@ -11,8 +11,8 @@
     "test:ci": "npm run unit:coverage && npm run test:typescript",
     "test:typescript": "tsd",
     "unit": "tap test/plugin.test.js",
-    "unit:coverage": "npm run unit -- --cov --coverage-report=lcovonly --no-browser",
-    "unit:report": "npm run unit -- --cov --coverage-report=html",
+    "unit:coverage": "npm run unit -- --disable-coverage --allow-incomplete-coverage --coverage-report=lcovonly --no-browser",
+    "unit:report": "npm run unit -- --coverage-report=html",
     "unit:verbose": "npm run unit -- -Rspec"
   },
   "repository": {

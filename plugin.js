@@ -51,6 +51,6 @@ function fastifyOpenAI (fastify, options, next) {
 }
 
 module.exports = fp(fastifyOpenAI, {
-  fastify: '>=2.11.0',
+  fastify: '>=5.0.0',
   name: 'fastify-openai'
 })
