@@ -1,40 +1,25 @@
 'use strict'
 
 const fp = require('fastify-plugin')
-const fs = require('fs')
-const path = require('path')
 const OpenAI = require('openai')
 
 function fastifyOpenAI (fastify, options, next) {
-  const { apiKey, name, ...openAIOptions } = options
+  const { apiKey, name } = options
 
   if (!apiKey) {
     return next(new Error('You must provide a OpenAI API key'))
   }
 
-  const config = Object.assign(
-    {
-      appInfo: {
-        name: 'fastify-openai',
-        url: 'https://github.com/timmywheels/fastify-openai',
-        version: JSON.parse(
-          fs.readFileSync(path.join(__dirname, 'package.json'))
-        ).version
-      }
-    },
-    openAIOptions
-  )
-
-  const openai = new OpenAI(config)
+  const openai = new OpenAI(options)
 
   if (name) {
-    if (openai[name]) {
-      return next(new Error(`fastify-openai '${name}' is a reserved keyword`))
-    } else if (!fastify.openai) {
+    if (!fastify.openai) {
       fastify.decorate('openai', Object.create(null))
     } else if (Object.prototype.hasOwnProperty.call(fastify.openai, name)) {
       return next(
-        new Error(`OpenAI '${name}' instance name has already been registered`)
+        new Error(
+          `OpenAI instance with name '${name}' has already been registered`
+        )
       )
     }
 
@@ -51,6 +36,9 @@ function fastifyOpenAI (fastify, options, next) {
 }
 
 module.exports = fp(fastifyOpenAI, {
-  fastify: '>=5.0.0',
+  fastify: '5.x',
   name: 'fastify-openai'
 })
+
+module.exports.default = fastifyOpenAI
+module.exports.fastifyOpenAI = fastifyOpenAI

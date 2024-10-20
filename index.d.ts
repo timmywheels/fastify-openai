@@ -4,7 +4,8 @@ import OpenAI, { ClientOptions } from "openai";
 /**
  * @docs https://github.com/timmywheels/fastify-openai/tree/types#options
  */
-export interface FastifyOpenAIOptions extends Partial<ClientOptions> {
+export interface FastifyOpenAIOptions
+  extends Omit<Partial<ClientOptions>, "appInfo"> {
   /**
    * OpenAI API Key
    *

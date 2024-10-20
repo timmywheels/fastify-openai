@@ -2,10 +2,56 @@
 
 const { test } = require('tap')
 const Fastify = require('fastify')
-const fastifyOpenAI = require('../plugin')
+const fastifyOpenAI = require('../index')
 const http = require('http')
 
 require('dotenv').config()
+
+test('it should throw if api key not defined', async (t) => {
+  t.plan(1)
+  const fastify = Fastify()
+  try {
+    await fastify.register(fastifyOpenAI, {})
+  } catch (err) {
+    t.equal(err.message, 'You must provide a OpenAI API key')
+  }
+})
+
+test('it should not allow multiple instances of fastify.openai with the same name', async (t) => {
+  const fastify = Fastify()
+  t.teardown(fastify.close.bind(fastify))
+
+  await fastify.register(fastifyOpenAI, {
+    apiKey: process.env.OPENAI_API_KEY,
+    name: 'one'
+  })
+
+  try {
+    await fastify.register(fastifyOpenAI, {
+      apiKey: process.env.OPENAI_API_KEY,
+      name: 'one'
+    })
+  } catch (err) {
+    t.equal(err.message, 'OpenAI instance with name \'one\' has already been registered')
+  }
+})
+
+test('it should not allow multiple instances of fastify.openai with the same default name', async (t) => {
+  const fastify = Fastify()
+  t.teardown(fastify.close.bind(fastify))
+
+  await fastify.register(fastifyOpenAI, {
+    apiKey: process.env.OPENAI_API_KEY
+  })
+
+  try {
+    await fastify.register(fastifyOpenAI, {
+      apiKey: process.env.OPENAI_API_KEY
+    })
+  } catch (err) {
+    t.equal(err.message, 'fastify-openai has already been registered')
+  }
+})
 
 test('fastify.openai namespace should exist', async (t) => {
   t.plan(11)

@@ -5,7 +5,7 @@ import { expectAssignable, expectType } from "tsd";
 import fastifyOpenAI, {
   FastifyOpenAI,
   FastifyOpenAINamedInstance,
-} from "../../plugin";
+} from "../../index";
 
 const { parsed: env } = config();
 
