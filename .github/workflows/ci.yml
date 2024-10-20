@@ -12,6 +12,7 @@ on:
 
 jobs:
   linter:
+    environment: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -25,6 +26,7 @@ jobs:
         run: npm run lint
 
   test:
+    environment: test
     needs: linter
     runs-on: ${{ matrix.os }}
     strategy:
@@ -50,6 +52,7 @@ jobs:
           parallel: true
 
   coverage:
+    environment: test
     needs: test
     runs-on: ubuntu-latest
     steps:
