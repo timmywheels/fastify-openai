@@ -1,0 +1,59 @@
+{
+  "name": "fastify-openai",
+  "version": "0.1.0",
+  "description": "OpenAI Fastify plugin",
+  "main": "plugin.js",
+  "types": "plugin.d.ts",
+  "scripts": {
+    "lint": "standard --verbose",
+    "lint:fix": "standard --fix",
+    "test": "npm run lint && npm run unit && npm run test:typescript",
+    "test:ci": "npm run unit:coverage && npm run test:typescript",
+    "test:typescript": "tsd",
+    "unit": "tap test/plugin.test.js",
+    "unit:coverage": "npm run unit -- --cov --coverage-report=lcovonly --no-browser",
+    "unit:report": "npm run unit -- --cov --coverage-report=html",
+    "unit:verbose": "npm run unit -- -Rspec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/timmywheels/fastify-openai.git"
+  },
+  "keywords": [
+    "openai",
+    "open ai",
+    "llm",
+    "generative ai",
+    "fastify",
+    "fastify-plugin"
+  ],
+  "author": "Tim Wheeler <tim@timwheeler.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/timmywheels/fastify-openai/issues"
+  },
+  "homepage": "https://github.com/timmywheels/fastify-openai#readme",
+  "engines": {
+    "node": ">=10"
+  },
+  "dependencies": {
+    "fastify-plugin": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.7",
+    "coveralls": "^3.1.1",
+    "dotenv": "^16.0.0",
+    "fastify": "^5.0.0",
+    "openai": "^4.0.0",
+    "standard": "^17.0.0",
+    "tap": "^21.0.1",
+    "tsd": "^0.31.2",
+    "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "openai": ">=4.0.0"
+  },
+  "tsd": {
+    "directory": "test/types"
+  }
+}
