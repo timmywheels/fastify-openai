@@ -23,8 +23,8 @@ devDependencies:
     specifier: ^5.0.0
     version: 5.0.0
   openai:
-    specifier: ^4.0.0
-    version: 4.68.1
+    specifier: ^4.68.1
+    version: 4.73.1
   standard:
     specifier: ^17.0.0
     version: 17.1.2
@@ -3724,8 +3724,8 @@ packages:
       mimic-fn: 2.1.0
     dev: true
 
-  /openai@4.68.1:
-    resolution: {integrity: sha512-C9XmYRHgra1U1G4GGFNqRHQEjxhoOWbQYR85IibfJ0jpHUhOm4/lARiKaC/h3zThvikwH9Dx/XOKWPNVygIS3g==}
+  /openai@4.73.1:
+    resolution: {integrity: sha512-nWImDJBcUsqrhy7yJScXB4+iqjzbUEgzfA3un/6UnHFdwWhjX24oztj69Ped/njABfOdLcO/F7CeWTI5dt8Xmg==}
     hasBin: true
     peerDependencies:
       zod: ^3.23.8
